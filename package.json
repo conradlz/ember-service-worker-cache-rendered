@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "author": "Conrad Lippert-Zajaczkowski",
-  "repository": "",
+  "repository": "https://github.com/PrinceCornNM/ember-service-worker-cache-rendered",
   "dependencies": {
     "broccoli-merge-trees": "^1.2.1",
     "broccoli-plugin": "^1.3.0",
