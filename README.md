@@ -1,27 +1,37 @@
-# ember-service-worker-cache-rendered
+# Ember Service Worker Cache Rendered
+_An Ember Service Worker plugin that caches rendered html from an ember app's server, probably fastboot._
 
-This README outlines the details of collaborating on this Ember addon.
+## F#$& my assets aren't updating in development mode
+
+Turn on the "Update on reload" setting in the `Application > Service Workers`
+menu in the Chrome devtools.
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-service-worker-cache-rendered`
-* `npm install`
-* `bower install`
+```
+ember install ember-service-worker-cache-rendered
+```
 
-## Running
+## Configuration
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+The configuration is done in the `ember-cli-build.js` file:
 
-## Running Tests
+```js
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+module.exports = function(defaults) {
+  var app = new EmberApp(defaults, {
+    'esw-cache-rendered': {
+      // changing this version number will bust the cache
+      version: '1'
+    }
+  });
 
-## Building
+  return app.toTree();
+};
+```
 
-* `ember build`
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+## Legal
+
+[Licensed under the MIT license](http://www.opensource.org/licenses/mit-license.php)
