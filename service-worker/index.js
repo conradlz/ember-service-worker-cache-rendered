@@ -6,11 +6,18 @@ import cleanupCaches from 'ember-service-worker/service-worker/cleanup-caches';
 const CACHE_KEY_PREFIX = 'esw-cache-rendered';
 const CACHE_NAME = `${CACHE_KEY_PREFIX}-${VERSION}`;
 
-const HTML_URL = new URL(self.location).toString();
-
 self.addEventListener('message', (event) => {
-  if (event && event.hasOwnProperty('data') && event.data.hasOwnProperty('renderedHTML'))
-    return caches.open(CACHE_NAME).then((cache) => cache.put(HTML_URL, new Response( new Blob([event.data.renderedHTML], {type: "text/html"}), { "status" : 200 , "statusText" : "Rendered" } )));
+  if (event && event.data) {
+    event.waitUntil(caches.match(event.data, { cacheName: CACHE_NAME }).then((result) => {
+      if (typeof result === 'undefined') {
+        return fetch(event.data, { credentials: 'include', headers: { Accept: 'text/html'} } ).then((response) => {
+            return caches
+              .open(CACHE_NAME)
+              .then((cache) => cache.put(event.data, response));
+        });
+      }
+    }));
+  }
 });
 
 self.addEventListener('activate', (event) => {
@@ -25,7 +32,7 @@ self.addEventListener('fetch', (event) => {
 
   if (isGETRequest && isHTMLRequest && isLocal) {
     event.respondWith(
-      caches.match(HTML_URL, { cacheName: CACHE_NAME })
+      caches.match(request.url, { cacheName: CACHE_NAME })
     );
   }
 });

@@ -1,6 +1,8 @@
 # Ember Service Worker Cache Rendered
 _An Ember Service Worker plugin that caches rendered html from an ember app's server, probably fastboot._
 
+This plugin works by performing a fetch for the current request to the ember server and caches the response, if it wasn't already cached. It should work for any path, which is nice if you want to cache server rendered contents with the service worker.
+
 ## F#$& my assets aren't updating in development mode
 
 Turn on the "Update on reload" setting in the `Application > Service Workers`
