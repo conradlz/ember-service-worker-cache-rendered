@@ -3,11 +3,12 @@
 
 var Config = require('./lib/config');
 var mergeTrees = require('broccoli-merge-trees');
+var filterInitializers = require('fastboot-filter-initializers');
 
 module.exports = {
   name: 'ember-service-worker-cache-rendered',
 
-  included: function(app) {
+  included(app) {
     this._super.included && this._super.included.apply(this, arguments);
     this.app = app;
     this.app.options = this.app.options || {};
@@ -19,5 +20,9 @@ module.exports = {
     var configFile = new Config([appTree], options);
 
     return mergeTrees([swTree, configFile]);
+  },
+
+  preconcatTree(tree) {
+    return filterInitializers(tree, this.app.name);
   }
 };
