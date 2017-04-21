@@ -8,6 +8,6 @@ export function initialize( appInstance ) {
 }
 
 export default {
-  name: 'config',
+  name: 'cache-rendered',
   initialize
 };
