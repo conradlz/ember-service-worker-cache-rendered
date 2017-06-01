@@ -1,6 +1,6 @@
 {
   "name": "ember-service-worker-cache-rendered",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "An Ember Service Worker plugin that caches rendered html.",
   "keywords": [
     "ember-addon",
